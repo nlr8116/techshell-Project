@@ -6,7 +6,7 @@ Both collaberators made a verion of the techshell both labeled with their names 
 
 We chose this because "final_techshell_Landon.c" had better commentation as well as better handling of user input to allow for more flexability for the user to make mistakes when writing commands.
 
-"techshell-Nico.c" worked as inteneded but wasn't able to properly implement quatation use to better allow freedom for the user but the code would still allow the user to complete the processes in the way they wished
+"techshell-Nico.c" worked as intended but wasn't able to properly implement quatation use to better allow freedom for the user but the code would still allow the user to complete the processes in the way they wished
   but had to complete the syntax and a specific non-flexable manner.
 
 ## Description:
