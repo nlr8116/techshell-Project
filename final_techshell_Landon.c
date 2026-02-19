@@ -1,5 +1,4 @@
 // Names: Landon Carderara and Nico Relle
-// Description:
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -27,21 +26,25 @@ void freeCommand(struct Command *cmd);
 
 int main(void){
     char cmd_line[1024];
-    
+
+    // infinite loop only breaks when exit is input
     while(1){
         display();
         input(cmd_line, sizeof(cmd_line));
+        // if enter is hit skips to the next iteration of the loop
         if (cmd_line[0] == '\0'){
             continue;
         } 
 
         struct Command cmd = ParseInput(cmd_line);
 
+        // if exit is input frees the struct then breaks the loop
         if (cmd.args[0] != NULL && strcmp(cmd.args[0], "exit") == 0){
             freeCommand(&cmd);
             break;
         }
 
+        // executes the code then free the struct
         executeCommand(cmd);
         freeCommand(&cmd);
 
@@ -75,9 +78,11 @@ void input(char *buf, size_t size) {
 // this function is used to parse through the users input 
 // it detects the redirect input and output flags and updates them in the struct
 // it add the regular commands/arguments to the args array to be used in the execvp function
+// it returns the Command struct with the needed information such as an array of arguments
+// input and output file if needed along with change the value of redirectin or out if needed
 struct Command ParseInput (char *input){
+    // initializes the command struct along with creating the variables
     struct Command cmd;
-
     cmd.args = malloc(64*sizeof(char*));
     cmd.inputFile = NULL;
     cmd.outputFile = NULL;
@@ -90,6 +95,7 @@ struct Command ParseInput (char *input){
     int b = 0;         //index for buffer
     int inQuotes = 0;
 
+    // loop that runs until a new line or end of line
     while (input[i] != '\0' && input[i] !='\n'){
         
         // skips leading spaces
@@ -163,13 +169,15 @@ struct Command ParseInput (char *input){
                 buffer[b++] = input[i++];
             }
         }
-        
+
+        // adds the buffer to the args array
         buffer[b] = '\0';
         if (b > 0){
             cmd.args[argCount++] = strdup(buffer);
         }
     }
-    
+
+    // adds NULL to the end of args so it can be used with execvp
     cmd.args[argCount] = NULL;
     return cmd;
 }
