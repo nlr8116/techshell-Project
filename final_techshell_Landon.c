@@ -150,7 +150,7 @@ struct Command ParseInput (char *input){
         }
 
         b = 0;
-        // handles the \ and " in file names
+        // adds agruments with no redirection symbol to the buffer
         while (input[i] != '\0'){
             if (input[i] == '\\'){
                 i++;
